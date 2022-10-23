@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recados</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body id="fundo">
+    <section>
+        <h2>Meus Recados</h2>
+        <form id="formRecados">
+            <input type="text" name="Descrição" id="descricao" placeholder="Descrição" autofocus required>
+            <input type="text" name="Detalhamento" id="detalhamento" placeholder="Detalhamento" required>
+            <button class="salvar" type="submit">Salvar</button>
+        </form>
+        <div id="root">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Descrição</th>
+                        <th>Detalhamento</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script src="./recados.js"></script>
+</body>
+
+</html>
