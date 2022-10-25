@@ -1,9 +1,8 @@
 const formularioRecados = document.getElementById('formRecados');
 const descricao = document.getElementById('descricao');
 const detalhamento = document.getElementById('detalhamento');
-const salvar = document.getElementsByClassName('salvar')
-let apagar = document.getElementById('Apagar')
-let editar = document.getElementById('editar')
+const salvar = document.getElementById('salvar')
+
 let addRecados = []
 
 formularioRecados.addEventListener('submit', (e) => {
@@ -13,50 +12,49 @@ formularioRecados.addEventListener('submit', (e) => {
     salvarRecados()
 });
 
-function construtor() {
-    this.id = 1;
-
-}
-
 function salvarRecados() {
     const recados = {
-        id: 1,
+        id: addRecados.length+1,
         descricao: descricao.value,
         detalhamento: detalhamento.value
     };
     addRecados.push(recados);
     console.log(addRecados)
     montarRecados(addRecados)
-
+    //localStorage.setItem()
+    //location.reload()
 
 };
 
 function montarRecados(addRecados) {
 
     let tbody = document.getElementById('tbody');
+    tbody.innerHTML = ""
 
-
-    addRecados.forEach((addRecados) => {
+    addRecados.forEach((recado) => {
 
         const linha = document.createElement('tr')
         linha.setAttribute('style', 'border: 1.5px solid black')
+        linha.setAttribute('id', recado.id)
 
         const idTabela = document.createElement('td');
-        idTabela.innerText = addRecados.id;
+        idTabela.innerText = recado.id;
 
         const descricaoTabela = document.createElement('td');
-        descricaoTabela.innerText = addRecados.descricao;
+        descricaoTabela.innerText = recado.descricao;
 
         const detalhamentoTabela = document.createElement('td');
-        detalhamentoTabela.innerText = addRecados.detalhamento;
+        detalhamentoTabela.innerText = recado.detalhamento;
 
         const acaoTabela = document.createElement('td');
 
         let botaoApagar = document.createElement('button');
         botaoApagar.setAttribute('style', ' margin-right: 5px;')
         botaoApagar.setAttribute('id', 'apagar');
-        botaoApagar.setAttribute('onclick', 'deletar')
         botaoApagar.innerText = 'Apagar'
+        botaoApagar.addEventListener('click', () => {
+            apagarRecados(recado.id)
+        });
 
         let boatoEditar = document.createElement('button')
         boatoEditar.setAttribute('id', 'editar');
@@ -64,18 +62,18 @@ function montarRecados(addRecados) {
         boatoEditar.innerText = 'Editar'
 
 
-
-        tbody.appendChild(linha)
-        tbody.appendChild(idTabela)
-        tbody.appendChild(descricaoTabela)
-        tbody.appendChild(detalhamentoTabela)
-        tbody.appendChild(acaoTabela)
+        linha.appendChild(idTabela)
+        linha.appendChild(descricaoTabela)
+        linha.appendChild(detalhamentoTabela)
         acaoTabela.appendChild(botaoApagar)
         acaoTabela.appendChild(boatoEditar)
+        linha.appendChild(acaoTabela)
         tbody.appendChild(linha)
+
+      
     });
-
 }
-
-
-
+function apagarRecados(id) {
+    document.getElementById(`${id}`).remove()
+    addRecados = addRecados.filter(recado => recado.id == id)
+}
