@@ -3,7 +3,7 @@ const descricao = document.getElementById('descricao');
 const detalhamento = document.getElementById('detalhamento');
 const salvar = document.getElementById('salvar')
 
-let addRecados = []
+let addRecados = JSON.parse(localStorage.getItem('recadoStorage') ?? '[]')
 
 formularioRecados.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -14,16 +14,16 @@ formularioRecados.addEventListener('submit', (e) => {
 
 function salvarRecados() {
     const recados = {
-        id: addRecados.length+1,
+        id: addRecados.length + 1,
         descricao: descricao.value,
         detalhamento: detalhamento.value
     };
     addRecados.push(recados);
+    salvarLocalStorage()
     console.log(addRecados)
     montarRecados(addRecados)
-    //localStorage.setItem()
-    //location.reload()
 
+    //location.reload()
 };
 
 function montarRecados(addRecados) {
@@ -61,7 +61,6 @@ function montarRecados(addRecados) {
         //botaoApagar.setAttribute('onclick' 'eventoque eu vou criar')
         boatoEditar.innerText = 'Editar'
 
-
         linha.appendChild(idTabela)
         linha.appendChild(descricaoTabela)
         linha.appendChild(detalhamentoTabela)
@@ -69,11 +68,12 @@ function montarRecados(addRecados) {
         acaoTabela.appendChild(boatoEditar)
         linha.appendChild(acaoTabela)
         tbody.appendChild(linha)
-
-      
     });
 }
 function apagarRecados(id) {
     document.getElementById(`${id}`).remove()
     addRecados = addRecados.filter(recado => recado.id == id)
+}
+function salvarLocalStorage() {
+    window.localStorage.setItem("recadoStorage", JSON.stringify(addRecados));
 }
