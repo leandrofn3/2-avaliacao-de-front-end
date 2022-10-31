@@ -1,6 +1,6 @@
 const formularioCriarConta = document.getElementById('formCriarConta');
 const nome = document.getElementById('nome');
-const email = document.getElementById('email');
+const emailHTML = document.getElementById('email');
 const senha = document.getElementById('senha');
 const confirmarSenha = document.getElementById('confirmaSenha');
 const usuarios = []
@@ -10,39 +10,35 @@ formularioCriarConta.addEventListener('submit', (e) => {
     e.preventDefault();
 
     caracteres()
-    igual()
     salvarFormulario()
 
     if (senha.value !== confirmarSenha.value) {
         alert('Sua senha e diferente da confirmação!')
-        window.location.href = "criarConta.html"
+        location.reload()
     };
 });
 
 function salvarFormulario() {
     const dados = {
         nome: nome.value,
-        email: email.value,
+        email: emailHTML.value,
         senha: senha.value,
         confirmarSenhaValue: confirmarSenha.value
     };
 
+    const existe = usuarios.some((dados) => {
+        return dados.email === emailHTML.value
+    });
+
+    if (existe) {
+        alert('Esse E-mail já existe!');
+        return
+    }
+
     usuarios.push(dados)
     console.log(usuarios)
-};
 
-function igual() {
-    for (let usuarios of formularioCriarConta) {
-
-        if (usuarios.email === email.value)
-            alert('Esse email já existe')
-        window.location.href = "criarConta.html"
-    };
-
-    if (usuarios.senha === senha.value) {
-        alert('Essa senha já existe')
-        window.location.href = "criarConta.html"
-    };
+    salvarLocalStorage()
 };
 
 function caracteres() {
@@ -52,7 +48,10 @@ function caracteres() {
     } else if (senha.value.length < 8) {
         alert("Preencha a senha com no mínimo 8 digitos.");
     } else {
-        window.location.href = "criarConta.html"
+        location.reload()
     };
 };
 
+function salvarLocalStorage() {
+    window.localStorage.setItem("usuarioStorage", JSON.stringify(usuarios));
+}

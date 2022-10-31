@@ -1,7 +1,7 @@
 const formularioRecados = document.getElementById('formRecados');
 const descricao = document.getElementById('descricao');
 const detalhamento = document.getElementById('detalhamento');
-const salvar = document.getElementById('salvar')
+
 
 let addRecados = JSON.parse(localStorage.getItem('recadoStorage') ?? '[]')
 
@@ -12,6 +12,10 @@ formularioRecados.addEventListener('submit', (e) => {
     salvarRecados()
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    montarRecados(addRecados)
+})
+
 function salvarRecados() {
     const recados = {
         id: addRecados.length + 1,
@@ -19,9 +23,10 @@ function salvarRecados() {
         detalhamento: detalhamento.value
     };
     addRecados.push(recados);
-    salvarLocalStorage()
-    console.log(addRecados)
-    montarRecados(addRecados)
+    salvarLocalStorage();
+    formularioRecados.reset();
+    console.log(addRecados);
+    montarRecados(addRecados);
 
     //location.reload()
 };
@@ -56,24 +61,55 @@ function montarRecados(addRecados) {
             apagarRecados(recado.id)
         });
 
-        let boatoEditar = document.createElement('button')
-        boatoEditar.setAttribute('id', 'editar');
-        //botaoApagar.setAttribute('onclick' 'eventoque eu vou criar')
-        boatoEditar.innerText = 'Editar'
+        let botaoEditar = document.createElement('button')
+        botaoEditar.setAttribute('id', 'editar');
+        botaoEditar.innerText = 'Editar'
+        botaoEditar.addEventListener('click', () => {
+            editarDados(recado)
+        })
 
         linha.appendChild(idTabela)
         linha.appendChild(descricaoTabela)
         linha.appendChild(detalhamentoTabela)
         acaoTabela.appendChild(botaoApagar)
-        acaoTabela.appendChild(boatoEditar)
+        acaoTabela.appendChild(botaoEditar)
         linha.appendChild(acaoTabela)
         tbody.appendChild(linha)
     });
 }
 function apagarRecados(id) {
-    document.getElementById(`${id}`).remove()
-    addRecados = addRecados.filter(recado => recado.id == id)
+    if (confirm('tem certeza que deseja excluir?')) {
+        document.getElementById(`${id}`).remove()
+        addRecados = addRecados.filter(recado => recado.id !== id)
+        window.localStorage.setItem('recadoStorage', JSON.stringify(addRecados));
+    }
 }
 function salvarLocalStorage() {
-    window.localStorage.setItem("recadoStorage", JSON.stringify(addRecados));
+    window.localStorage.setItem('recadoStorage', JSON.stringify(addRecados));
+}
+
+function editarDados(recado) {
+    descricao.value = recado.descricao
+    detalhamento.value = recado.detalhamento
+
+    const salvar = document.getElementById('salvar')
+    salvar.setAttribute('style', 'display: none');
+
+    const botaoAtualizar = document.getElementById('btn-atualizar')
+    botaoAtualizar.setAttribute('style', 'display: inline-block');
+    botaoAtualizar.addEventListener('click', () => {
+        const dadoAtualizados = {
+            descricao: descricao.value,
+            detalhamento: detalhamento.value
+        }
+    })
+
+    const botaoCancelar = document.getElementById('cancelar')
+    botaoCancelar.setAttribute('style', 'display: inline-block')
+    botaoCancelar.addEventListener('click', () => {
+
+        salvar.setAttribute('style', 'display: inline-block');
+        botaoAtualizar.setAttribute('style', 'display: none');
+        botaoCancelar.setAttribute('style', 'display: none');
+    });
 }
