@@ -48,7 +48,8 @@ function caracteres() {
     } else if (senha.value.length < 8) {
         alert("Preencha a senha com no mínimo 8 digitos.");
     } else {
-        location.reload()
+        alert('Criada com sucesso!')
+        location.href = "./index.html"
     };
 };
 

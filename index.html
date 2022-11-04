@@ -6,24 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Recados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body id="fundo">
-    <section>
-        <div>
+    <section class="container-fluid">
+        <div class="text-center">
             <h1>Sistema de Recados</h1>
         </div>
-        <div class="area-login">
-            <div class="login">
+        <div class="area-login container-fluid text-center container">
+            <div class="login col-5">
                 <h2>Login</h2>
-                <form id="formLogin">
-                    <input type="text" name="email usuario" id="email" placeholder="Digite o seu E-mail" autofocus
-                        required>
-                    <input type="password" name="senha" id="senha" placeholder="Sua senha" required>
-                    <input type="submit" value="entrar" id="btn-entrar">
+                <form id="formLogin" class="container-fluid ">
+                    <input type="text" name="email usuario" id="email" placeholder="Digite o seu E-mail"
+                        class="container col-11 col-md-11 col-xl-12 m-2" autofocus required>
+                    <input type="password" name="senha" id="senha" placeholder="Sua senha"
+                        class="container col-11 col-md-11  col-xl-12 m-2" required>
+                    <button type="submit" value="entrar" id="btn-entrar"
+                    class= "col-11 col-md-11 col-xl-12 m-2">Entrar</button>
                 </form>
-                <p>Ainda não tem uma conta? <a href="./criarConta.html">Criar conta</a></p>
+                <p class="container col-11 col-md-9 col-xl-7">Ainda não tem uma conta? <a href="./criarConta.html">Criar
+                        conta</a></p>
             </div>
         </div>
     </section>

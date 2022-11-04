@@ -111,5 +111,6 @@ function editarDados(recado) {
         salvar.setAttribute('style', 'display: inline-block');
         botaoAtualizar.setAttribute('style', 'display: none');
         botaoCancelar.setAttribute('style', 'display: none');
+        formularioRecados.reset();
     });
 }
