@@ -12,35 +12,44 @@
 </head>
 
 <body id="fundo">
-    <section class="text-center container container-fluid">
-        <h2>Meus Recados</h2>
-        <form id="formRecados">
-            <input type="text" name="Descrição" id="descricao" placeholder="Descrição" autofocus required
-                class="col-5 col-md-5 col-xl-6 ">
-            <input type="text" name="Detalhamento" id="detalhamento" placeholder="Detalhamento" required
-                class="col-4 col-md-5 col-xl-5">
-            <button type="submit" id="salvar" class="salvar">Salvar</button>
-            <button type="button" value="atualizar" style="display: none;" id="btn-atualizar"
-                class="col-12 col-md-5 col-xl-5">Atualizar</button>
-            <button type="button" value="cancelar" style="display: none;" id="cancelar"
-                class=" col-12 col-md-5 col-xl-5">Cancelar</button>
-        </form>
-        <div>
-            <table class="container col-11 col-md-12">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Descrição</th>
-                        <th>Detalhamento</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
+    <main class="container-fluid">
+        <section class="container-fluid my-2 d-block">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-primary" id="btn-sair">Sair</button>
+                </div>
+            </div>
+        </section>
+        <section class="text-center container container-fluid">
+            <h2>Meus Recados</h2>
+            <form id="formRecados">
+                <input type="text" name="Descrição" id="descricao" placeholder="Descrição" autofocus required
+                    class="col-5 col-md-5 col-xl-6 ">
+                <input type="text" name="Detalhamento" id="detalhamento" placeholder="Detalhamento" required
+                    class="col-4 col-md-5 col-xl-5">
+                <button type="submit" id="salvar" class="salvar">Salvar</button>
+                <button type="button" value="atualizar" style="display: none;" id="btn-atualizar"
+                    class="col-12 col-md-5 col-xl-5">Atualizar</button>
+                <button type="button" value="cancelar" style="display: none;" id="cancelar"
+                    class=" col-12 col-md-5 col-xl-5">Cancelar</button>
+            </form>
+            <div>
+                <table class="container col-11 col-md-12">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Descrição</th>
+                            <th>Detalhamento</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
 
-                </tbody>
-            </table>
-        </div>
-    </section>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
     <script src="./recados.js"></script>
 </body>
 

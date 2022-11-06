@@ -3,56 +3,75 @@ const nome = document.getElementById('nome');
 const emailHTML = document.getElementById('email');
 const senha = document.getElementById('senha');
 const confirmarSenha = document.getElementById('confirmaSenha');
-const usuarios = []
+const usuarios = JSON.parse(localStorage.getItem('listaUsuarios') ?? '[]');
 
 
 formularioCriarConta.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    caracteres()
-    salvarFormulario()
+    const formularioValido = verificarCredenciais();
 
-    if (senha.value !== confirmarSenha.value) {
-        alert('Sua senha e diferente da confirmação!')
-        location.reload()
-    };
+    if (formularioValido) {
+        salvarFormulario()
+    }
+
 });
 
 function salvarFormulario() {
-    const dados = {
+    const novoUsuario = {
         nome: nome.value,
         email: emailHTML.value,
         senha: senha.value,
-        confirmarSenhaValue: confirmarSenha.value
+        recados: []
     };
 
-    const existe = usuarios.some((dados) => {
-        return dados.email === emailHTML.value
+    const existe = usuarios.some((usuario) => {
+        return usuario.email === novoUsuario.email
     });
 
     if (existe) {
-        alert('Esse E-mail já existe!');
+        alert('Esse usuário já existe!');
         return
     }
 
-    usuarios.push(dados)
+    usuarios.push(novoUsuario)
     console.log(usuarios)
 
-    salvarLocalStorage()
+    salvarLocalStorage('listaUsuarios', usuarios)
+    formularioCriarConta.reset()
+    alert('Conta criada com sucesso!')
+    window.location.href = 'index.html'
 };
 
-function caracteres() {
+function verificarCredenciais() {
+    let valido = true;
+
+    if (nome.value.length < 3) {
+        alert("preencha o campo com seu nome completo");
+        valido = false;
+        return valido
+    }
+
     if (email.value.length < 5) {
         alert("preencha o campo com um e-mail válido.");
+        valido = false;
+        return valido
+    }
 
-    } else if (senha.value.length < 8) {
+    if (senha.value.length < 8) {
         alert("Preencha a senha com no mínimo 8 digitos.");
-    } else {
-        alert('Criada com sucesso!')
-        location.href = "./index.html"
-    };
+        valido = false;
+        return valido
+    }
+
+    if (senha.value !== confirmarSenha.value) {
+        alert('Sua senha e diferente da confirmação!')
+        valido = false;
+    }
+
+    return valido
 };
 
-function salvarLocalStorage() {
-    window.localStorage.setItem("usuarioStorage", JSON.stringify(usuarios));
+function salvarLocalStorage(chave, dados) {
+    window.localStorage.setItem(chave, JSON.stringify(dados));
 }

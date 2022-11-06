@@ -1,42 +1,62 @@
 const formularioRecados = document.getElementById('formRecados');
 const descricao = document.getElementById('descricao');
 const detalhamento = document.getElementById('detalhamento');
-
-
-let addRecados = JSON.parse(localStorage.getItem('recadoStorage') ?? '[]')
-
-formularioRecados.addEventListener('submit', (e) => {
-    e.preventDefault()
-
-
-    salvarRecados()
-});
+const botaoSair = document.getElementById('btn-sair');
+const botaoSalvar = document.getElementById('salvar');
+const botaoAtualizar = document.getElementById('btn-atualizar');
+const botaoCancelar = document.getElementById('cancelar');
+const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') ?? 'null');
 
 document.addEventListener('DOMContentLoaded', () => {
-    montarRecados(addRecados)
+    if (!usuarioLogado) {
+        alert('Você precisa realizar login para acessar essa página!');
+        window.location.href = 'index.html';
+    }
+
+    montarRecados(usuarioLogado.recados)
 })
 
-function salvarRecados() {
-    const recados = {
-        id: addRecados.length + 1,
+botaoSair.addEventListener('click', () => {
+    const usuarios = JSON.parse(localStorage.getItem('listaUsuarios'));
+
+    const indice = usuarios.findIndex((usuario) => usuario.email === usuarioLogado.email);
+
+    console.log(usuarioLogado);
+
+    usuarios[indice] = usuarioLogado;
+    salvarLocalStorage('listaUsuarios', usuarios);
+
+    localStorage.removeItem('usuarioLogado');
+    window.location.href = 'index.html';
+});
+
+
+formularioRecados.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    salvarRecado()
+});
+
+function salvarRecado() {
+    const novoRecado = {
+        id: usuarioLogado.recados.length + 1,
         descricao: descricao.value,
         detalhamento: detalhamento.value
     };
-    addRecados.push(recados);
-    salvarLocalStorage();
-    formularioRecados.reset();
-    console.log(addRecados);
-    montarRecados(addRecados);
 
-    //location.reload()
+    usuarioLogado.recados.push(novoRecado);
+    salvarLocalStorage('usuarioLogado', usuarioLogado);
+
+    formularioRecados.reset();
+    montarRecados(usuarioLogado.recados);
 };
 
-function montarRecados(addRecados) {
+function montarRecados(listaRecados) {
 
     let tbody = document.getElementById('tbody');
     tbody.innerHTML = ""
 
-    addRecados.forEach((recado) => {
+    listaRecados.forEach((recado, indice) => {
 
         const linha = document.createElement('tr')
         linha.setAttribute('style', 'border: 1.5px solid black')
@@ -65,7 +85,7 @@ function montarRecados(addRecados) {
         botaoEditar.setAttribute('id', 'editar');
         botaoEditar.innerText = 'Editar'
         botaoEditar.addEventListener('click', () => {
-            editarDados(recado)
+            editarDados(recado, indice)
         })
 
         linha.appendChild(idTabela)
@@ -77,40 +97,48 @@ function montarRecados(addRecados) {
         tbody.appendChild(linha)
     });
 }
+
 function apagarRecados(id) {
-    if (confirm('tem certeza que deseja excluir?')) {
+    const confirma = confirm(`Tem certeza que deseja excluir o recado ${id}?`)
+
+    if (confirma) {
         document.getElementById(`${id}`).remove()
-        addRecados = addRecados.filter(recado => recado.id !== id)
-        window.localStorage.setItem('recadoStorage', JSON.stringify(addRecados));
+        usuarioLogado.recados = usuarioLogado.recados.filter(recado => recado.id !== id)
+        salvarLocalStorage('usuarioLogado', usuarioLogado)
     }
 }
-function salvarLocalStorage() {
-    window.localStorage.setItem('recadoStorage', JSON.stringify(addRecados));
-}
 
-function editarDados(recado) {
+function editarDados(recado, indice) {
     descricao.value = recado.descricao
     detalhamento.value = recado.detalhamento
 
-    const salvar = document.getElementById('salvar')
-    salvar.setAttribute('style', 'display: none');
-
-    const botaoAtualizar = document.getElementById('btn-atualizar')
+    botaoSalvar.setAttribute('style', 'display: none');
     botaoAtualizar.setAttribute('style', 'display: inline-block');
-    botaoAtualizar.addEventListener('click', () => {
-        const dadoAtualizados = {
-            descricao: descricao.value,
-            detalhamento: detalhamento.value
-        }
-    })
+    botaoCancelar.setAttribute('style', 'display: inline-block');
 
-    const botaoCancelar = document.getElementById('cancelar')
-    botaoCancelar.setAttribute('style', 'display: inline-block')
+
     botaoCancelar.addEventListener('click', () => {
-
-        salvar.setAttribute('style', 'display: inline-block');
+        botaoSalvar.setAttribute('style', 'display: inline-block');
         botaoAtualizar.setAttribute('style', 'display: none');
         botaoCancelar.setAttribute('style', 'display: none');
         formularioRecados.reset();
     });
+
+
+    botaoAtualizar.addEventListener('click', () => {
+        const recadoAtualizado = {
+            id: recado.id,
+            descricao: descricao.value,
+            detalhamento: detalhamento.value
+        }
+
+        usuarioLogado.recados[indice] = recadoAtualizado;
+        salvarLocalStorage('usuarioLogado', usuarioLogado);
+
+        window.location.reload();
+    })
+}
+
+function salvarLocalStorage(chave, dados) {
+    window.localStorage.setItem(chave, JSON.stringify(dados));
 }

@@ -1,35 +1,34 @@
-let listaUsuarios = localStorage.getItem('usuarioStorage');
-if (listaUsuarios === null) {
-    listaUsuarios = []
-} else {
-    listaUsuarios = [JSON.parse(listaUsuarios)]
-};
+const formularioLogin = document.getElementById('formLogin');
 
+let listaUsuarios = JSON.parse(localStorage.getItem('listaUsuarios') ?? '[]');
 
-const formulario = document.getElementById('formLogin');
-formulario.addEventListener('submit', (evento) => {
-    evento.preventDefault()
+formularioLogin.addEventListener('submit', (evento) => {
+    evento.preventDefault();
 
+    const emailHTML = document.getElementById('email')
+    const senhaHTML = document.getElementById('senha')
 
+    const usuarioEncontrado = listaUsuarios.find((usuario) => usuario.email === emailHTML.value && usuario.senha === senhaHTML.value)
 
-    const emailHTML = document.getElementById('email').value
-    const senhaHTML = document.getElementById('senha').value
-
-
-
-    for (let usuarios of listaUsuarios) {
-        if (usuarios.email !== emailHTML.value && usuarios.senha !== senhaHTML.value) {
-            alert("usuário ou senha incoreto!")
-            return
-        }
-
-       console.log(usuarios)
-
-        if (usuarios.email === emailHTML.value && usuarios.senha === senhaHTML.value) {
-            /*location.href = "./recados.html"*/
-        };
+    if (!usuarioEncontrado) {
+        alert('Conta nÃ£o encontrada! Verifique e-mail e senha informadas!');
+        return
     }
 
+    salvarLocalStorage('usuarioLogado', usuarioEncontrado);
+    window.location.href = 'recados.html'
 });
+
+function salvarLocalStorage(chave, dados) {
+    window.localStorage.setItem(chave, JSON.stringify(dados));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') ?? 'null');
+
+    if (usuarioLogado) {
+        window.location.href = 'recados.html'
+    }
+})
 
 
