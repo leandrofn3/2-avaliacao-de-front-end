@@ -7,20 +7,104 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    /*background: linear-gradient(194deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 42%, rgba(4, 191, 228, 1) 100%) no-repeat fixed;
-    background-image: url(./assets/landscape-argentina.jpg);*/
+    margin: 0;
+    padding: 0;
+    background: #2980b9 url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png') repeat 0 0;
+    -webkit-animation: 10s linear 0s normal none infinite animate;
+    -moz-animation: 10s linear 0s normal none infinite animate;
+    -ms-animation: 10s linear 0s normal none infinite animate;
+    -o-animation: 10s linear 0s normal none infinite animate;
+    animation: 10s linear 0s normal none infinite animate;
+
 }
 
-#fundo {
-    background: fixed no-repeat;
-    background: #1e3c72;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2a5298, #1e3c72);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #2a5298, #1e3c72);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+@-webkit-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 500px 0;
+    }
 }
 
+@-moz-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@-ms-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@-o-keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 500px 0;
+    }
+}
+
+@keyframes animate {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 500px 0;
+    }
+}
+
+/*====================================================================================================*/
+.textoAnimado {
+    -webkit-animation: textoAnimado 5s 2s infinite;
+    animation: textoAnimado 5s 2s infinite;
+}
+
+@-webkit-keyframes textoAnimado {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+}
+
+@keyframes textoAnimado {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+}
+
+/*=================================================================================================*/
 .area-login {
     display: flex;
     justify-content: center;
@@ -58,12 +142,9 @@ h1 {
 }
 
 h2 {
-    margin-top: 5px;
     display: flex;
     justify-content: center;
-    font-size: 60px;
     color: white;
-    text-align: center;
     text-shadow: 3px 3px black;
     align-items: center;
 }
@@ -73,13 +154,12 @@ h3 {
     text-align: center;
     text-shadow: 3px 3px black;
     align-items: center;
-    font-size: 45px;
 }
 
 input {
     margin-top: 10px;
     border: none;
-    height: 30px;
+    height: 35px;
     outline: none;
     border-radius: 5px;
     padding-left: 10px;

@@ -30,5 +30,3 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'recados.html'
     }
 })
-
-
